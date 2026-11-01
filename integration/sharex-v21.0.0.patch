@@ -1,0 +1,168 @@
+diff --git a/Directory.Packages.props b/Directory.Packages.props
+index fdb41f5..458bf06 100644
+--- a/Directory.Packages.props
++++ b/Directory.Packages.props
+@@ -11,7 +11,7 @@
+     <PackageVersion Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.24.4" />
+     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+     <PackageVersion Include="SkiaSharp.Views.WindowsForms" Version="3.119.4" />
+-    <PackageVersion Include="SSH.NET" Version="2025.1.0" />
++    <PackageVersion Include="SSH.NET" Version="2026.0.0" />
+     <PackageVersion Include="ZXing.Net" Version="0.16.11" />
+     <PackageVersion Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.14" />
+     <PackageVersion Include="Avalonia" Version="12.0.5" />
+diff --git a/ShareX/Enums.cs b/ShareX/Enums.cs
+index af5e55a..4cbf161 100644
+--- a/ShareX/Enums.cs
++++ b/ShareX/Enums.cs
+@@ -1,4 +1,4 @@
+-﻿#region License Information (GPL v3)
++#region License Information (GPL v3)
+ 
+ /*
+     ShareX - A program that allows you to take screenshots and share any file type
+@@ -151,7 +151,9 @@ public enum AfterCaptureTasks // Localized
+         DoOCR = 1 << 18,
+         ShowBeforeUploadWindow = 1 << 19,
+         UploadImageToHost = 1 << 20,
+-        DeleteFile = 1 << 21
++        DeleteFile = 1 << 21,
++        [System.ComponentModel.Description("Save research receipt (original + processing evidence)")]
++        SaveResearchReceipt = 1 << 22
+     }
+ 
+     [Flags]
+diff --git a/ShareX/Forms/MainForm.cs b/ShareX/Forms/MainForm.cs
+index ee95f99..b4fe765 100644
+--- a/ShareX/Forms/MainForm.cs
++++ b/ShareX/Forms/MainForm.cs
+@@ -1,4 +1,4 @@
+-﻿#region License Information (GPL v3)
++#region License Information (GPL v3)
+ 
+ /*
+     ShareX - A program that allows you to take screenshots and share any file type
+@@ -74,6 +74,10 @@ private async void MainForm_HandleCreated(object sender, EventArgs e)
+         private void InitializeControls()
+         {
+             InitializeComponent();
++            tsmiTrayTools.DropDownItems.Add("Research receipt inspector", null, (s, e) => new ResearchReceiptForm().Show());
++            tsddbTools.DropDownItems.Add("Research receipt inspector", null, (s, e) => new ResearchReceiptForm().Show());
++            cmsTaskInfo.Items.Add(new ToolStripSeparator());
++            cmsTaskInfo.Items.Add("Verify research receipt", null, (s, e) => ResearchReceiptUi.OpenForFile(uim?.SelectedItem?.Info.FilePath));
+ 
+             ShareXResources.UseWhiteIcon = Program.Settings.UseWhiteShareXIcon;
+ 
+diff --git a/ShareX/Program.cs b/ShareX/Program.cs
+index 9d14c88..b7ae337 100644
+--- a/ShareX/Program.cs
++++ b/ShareX/Program.cs
+@@ -1,4 +1,4 @@
+-﻿#region License Information (GPL v3)
++#region License Information (GPL v3)
+ 
+ /*
+     ShareX - A program that allows you to take screenshots and share any file type
+@@ -271,6 +271,7 @@ public static string ScreenshotsParentFolder
+         [STAThread]
+         private static void Main(string[] args)
+         {
++            if (ResearchReceiptEntry.TryRun(args)) return;
+             StartupWork();
+ 
+             StartTimer = Stopwatch.StartNew();
+diff --git a/ShareX/ShareX.csproj b/ShareX/ShareX.csproj
+index 0e566d4..d2d5c51 100644
+--- a/ShareX/ShareX.csproj
++++ b/ShareX/ShareX.csproj
+@@ -15,6 +15,7 @@
+     <CETCompat>false</CETCompat>
+   </PropertyGroup>
+   <ItemGroup>
++    <ProjectReference Include="..\..\src\ShareX.Receipts.Windows\ShareX.Receipts.Windows.csproj" />
+     <PackageReference Include="Avalonia.Win32.Interoperability" />
+     <PackageReference Include="Newtonsoft.Json" />
+     <PackageReference Include="SkiaSharp" />
+diff --git a/ShareX/WorkerTask.cs b/ShareX/WorkerTask.cs
+index 6600dc1..93d07eb 100644
+--- a/ShareX/WorkerTask.cs
++++ b/ShareX/WorkerTask.cs
+@@ -1,4 +1,4 @@
+-﻿#region License Information (GPL v3)
++#region License Information (GPL v3)
+ 
+ /*
+     ShareX - A program that allows you to take screenshots and share any file type
+@@ -63,6 +63,7 @@ public class WorkerTask : IDisposable
+ 
+         private ThreadWorker threadWorker;
+         private GenericUploader uploader;
++        private ResearchCaptureReceipt researchReceipt;
+         private TaskReferenceHelper taskReferenceHelper;
+ 
+         #region Constructors
+@@ -546,6 +547,11 @@ private bool DoThreadJob()
+                 }
+ 
+                 DoFileJobs();
++                if (researchReceipt != null && !string.IsNullOrEmpty(Info.FilePath))
++                {
++                    var receipt = researchReceipt.Seal(Info.FilePath);
++                    DebugHelper.WriteLine("Research receipt created: " + receipt.ReceiptSha256);
++                }
+             }
+             else if (Info.Job == TaskJob.TextUpload && !string.IsNullOrEmpty(Text))
+             {
+@@ -576,6 +582,9 @@ private bool DoAfterCaptureJobs()
+                 return true;
+             }
+ 
++            if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.SaveResearchReceipt))
++                researchReceipt = new ResearchCaptureReceipt(Image, Info.TaskSettings);
++
+             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.BeautifyImage))
+             {
+                 Image = TaskHelpers.BeautifyImage(Image, Info.TaskSettings);
+@@ -586,6 +595,8 @@ private bool DoAfterCaptureJobs()
+                 }
+             }
+ 
++            researchReceipt?.Observe("after-beautify-boundary", Image, "State after the optional beautify stage.");
++
+             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.AddImageEffects))
+             {
+                 Image = TaskHelpers.ApplyImageEffects(Image, Info.TaskSettings.ImageSettingsReference);
+@@ -597,6 +608,8 @@ private bool DoAfterCaptureJobs()
+                 }
+             }
+ 
++            researchReceipt?.Observe("after-effects-boundary", Image, "State after optional image effects.");
++
+             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.AnnotateImage))
+             {
+                 Image = TaskHelpers.AnnotateImage(Image, null, Info.TaskSettings, true);
+@@ -607,6 +620,8 @@ private bool DoAfterCaptureJobs()
+                 }
+             }
+ 
++            researchReceipt?.Observe("after-annotation-boundary", Image, "State after the optional annotation stage.");
++
+             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.CopyImageToClipboard))
+             {
+                 ClipboardHelpers.CopyImage(Image, Info.FileName);
+@@ -627,13 +642,13 @@ private bool DoAfterCaptureJobs()
+             Info.Metadata.Image = Image;
+ 
+             if (Info.TaskSettings.AfterCaptureJob.HasFlagAny(AfterCaptureTasks.SaveImageToFile, AfterCaptureTasks.SaveImageToFileWithDialog, AfterCaptureTasks.DoOCR,
+-                AfterCaptureTasks.UploadImageToHost, AfterCaptureTasks.AnalyzeImage))
++                AfterCaptureTasks.UploadImageToHost, AfterCaptureTasks.AnalyzeImage, AfterCaptureTasks.SaveResearchReceipt))
+             {
+                 ImageData imageData = TaskHelpers.PrepareImage(Image, Info.TaskSettings);
+                 Data = imageData.ImageStream;
+                 Info.FileName = Path.ChangeExtension(Info.FileName, imageData.ImageFormat.GetDescription());
+ 
+-                if (Info.TaskSettings.AfterCaptureJob.HasFlagAny(AfterCaptureTasks.SaveImageToFile, AfterCaptureTasks.AnalyzeImage))
++                if (Info.TaskSettings.AfterCaptureJob.HasFlagAny(AfterCaptureTasks.SaveImageToFile, AfterCaptureTasks.AnalyzeImage, AfterCaptureTasks.SaveResearchReceipt))
+                 {
+                     string screenshotsFolder = TaskHelpers.GetScreenshotsFolder(Info.TaskSettings, Info.Metadata);
+                     string filePath = TaskHelpers.HandleExistsFile(screenshotsFolder, Info.FileName, Info.TaskSettings);

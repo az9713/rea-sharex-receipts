@@ -1,0 +1,22 @@
+name: Build and verify modified ShareX
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: windows-latest
+    env:
+      DOTNET_GENERATE_ASPNET_CERTIFICATE: 'false'
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Acquire pinned SDK and public upstream source
+        shell: pwsh
+        run: ./scripts/bootstrap.ps1
+      - name: Build modified application
+        shell: pwsh
+        run: ./scripts/build.ps1
+      - name: Verify receipts and actual capture-processing pipeline
+        shell: pwsh
+        run: ./scripts/test.ps1

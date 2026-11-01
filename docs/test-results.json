@@ -1,0 +1,66 @@
+{
+  "passed": 15,
+  "failed": 0,
+  "results": [
+    {
+      "name": "canonical RGBA includes alpha, row order and dimensions",
+      "passed": true
+    },
+    {
+      "name": "PNG roundtrip preserves canonical input pixels",
+      "passed": true
+    },
+    {
+      "name": "valid receipt verifies bytes and decoded pixels",
+      "passed": true
+    },
+    {
+      "name": "tampering detected: original.png",
+      "passed": true
+    },
+    {
+      "name": "tampering detected: result.png",
+      "passed": true
+    },
+    {
+      "name": "tampering detected: recipe.json",
+      "passed": true
+    },
+    {
+      "name": "tampering detected: receipt.json",
+      "passed": true
+    },
+    {
+      "name": "missing artifact rejected",
+      "passed": true
+    },
+    {
+      "name": "uncommitted extra entry rejected",
+      "passed": true
+    },
+    {
+      "name": "path traversal rejected before artifact reads",
+      "passed": true
+    },
+    {
+      "name": "unsupported schema rejected",
+      "passed": true
+    },
+    {
+      "name": "pixel mismatch rejected after byte-level recommit",
+      "passed": true
+    },
+    {
+      "name": "independent anchor detects fully rewritten receipt",
+      "passed": true
+    },
+    {
+      "name": "existing immutable receipt cannot be overwritten",
+      "passed": true
+    },
+    {
+      "name": "requested tasks stay distinct from observed stages",
+      "passed": true
+    }
+  ]
+}

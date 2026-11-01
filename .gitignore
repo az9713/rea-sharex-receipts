@@ -1,0 +1,13 @@
+.tools/
+.runtime/
+upstream/
+**/bin/
+**/obj/
+fixtures/run-*/
+fixtures/test-run-*/
+fixtures/integration-run-*/
+releases/*/
+releases/*.zip
+audit-baseline.private.json
+*.private.json
+handoff.json

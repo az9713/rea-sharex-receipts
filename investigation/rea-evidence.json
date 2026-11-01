@@ -1,0 +1,11 @@
+{
+  "source": "existing read-only REA managed analysis; sanitized summary",
+  "evidence_id": "ev_befabb9d75ae6a55ac38b53d6a52590ea7fdf362c0c81389d92bb810b0c7fca8",
+  "assembly_name": "ShareX",
+  "assembly_version": "21.0.0.0",
+  "target_framework": ".NETCoreApp,Version=v9.0",
+  "observed_artifact_sha256": "eae64fc357b3548b561b3c02820a552ac7264450971ba1e4c892c8455c9a7190",
+  "limits": "Static inspection did not load the assembly, resolve dependencies through a CLR, decompile C#, or execute target code.",
+  "public_source": "https://github.com/ShareX/ShareX/tree/d2502561f63fc3ff502cacd91514e3f7f2948c74",
+  "source_alignment": "Version matched; source-to-installed-binary equivalence was not established."
+}

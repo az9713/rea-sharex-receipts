@@ -1,0 +1,38 @@
+{
+  "schema": "sharex-receipt/1",
+  "id": "630175d6a7eb4653bdf72395ed29fed2",
+  "createdUtc": "2026-11-01T04:34:19.7493092+00:00",
+  "producer": "ShareX Receipts / experimental fork",
+  "upstreamRevision": "d2502561f63fc3ff502cacd91514e3f7f2948c74",
+  "artifacts": [
+    {
+      "name": "original.png",
+      "bytes": 5702,
+      "sha256": "67e45a0e331dee40b865b022c68adf46b814c3d58cc9ebd1bbdd5b3e8f3d3922",
+      "mediaType": "image/png",
+      "pixels": {
+        "width": 640,
+        "height": 360,
+        "sha256": "7cef47bc2f1f17e207b78f21f98abc96f243e413040132f49a7da1266f724e22"
+      }
+    },
+    {
+      "name": "result.jpg",
+      "bytes": 9735,
+      "sha256": "f481a46ebbffa0ead8e7c93d44a7bae1bd24b5c1605bd4f81e922141b057045f",
+      "mediaType": "image/jpg",
+      "pixels": {
+        "width": 640,
+        "height": 360,
+        "sha256": "fcf9fd948f23d3350baa5e5a988b56db999e7c8fced90e342a8bdd446c7140f3"
+      }
+    },
+    {
+      "name": "recipe.json",
+      "bytes": 1977,
+      "sha256": "1e41219a35697979c28020b764b35dbdaff066c7e46ce12402fceaf082a03fca",
+      "mediaType": "application/json",
+      "pixels": null
+    }
+  ]
+}

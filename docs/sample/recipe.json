@@ -1,0 +1,56 @@
+{
+  "boundary": "WorkerTask input bitmap before after-capture effects; sealed after file actions and before OCR/upload/delete",
+  "requestedTasks": [
+    "SaveResearchReceipt"
+  ],
+  "settings": {
+    "configuredImageFormat": "JPEG",
+    "configuredJpegQuality": "40",
+    "configuredAutoJpegQuality": "False",
+    "finalExtension": ".jpg"
+  },
+  "observedStages": [
+    {
+      "name": "worker-input",
+      "state": "observed",
+      "pixels": {
+        "width": 640,
+        "height": 360,
+        "sha256": "7cef47bc2f1f17e207b78f21f98abc96f243e413040132f49a7da1266f724e22"
+      },
+      "note": "Accepted bitmap before WorkerTask after-capture processing."
+    },
+    {
+      "name": "after-beautify-boundary",
+      "state": "observed",
+      "pixels": {
+        "width": 640,
+        "height": 360,
+        "sha256": "7cef47bc2f1f17e207b78f21f98abc96f243e413040132f49a7da1266f724e22"
+      },
+      "note": "State after the optional beautify stage."
+    },
+    {
+      "name": "after-effects-boundary",
+      "state": "observed",
+      "pixels": {
+        "width": 640,
+        "height": 360,
+        "sha256": "7cef47bc2f1f17e207b78f21f98abc96f243e413040132f49a7da1266f724e22"
+      },
+      "note": "State after optional image effects."
+    },
+    {
+      "name": "after-annotation-boundary",
+      "state": "observed",
+      "pixels": {
+        "width": 640,
+        "height": 360,
+        "sha256": "7cef47bc2f1f17e207b78f21f98abc96f243e413040132f49a7da1266f724e22"
+      },
+      "note": "State after the optional annotation stage."
+    }
+  ],
+  "sourceLabel": "Source context intentionally omitted; receipt contains captured pixels",
+  "limitations": "Requested tasks are not execution proof. Only listed stages were observed. Region annotations performed before WorkerTask are already in the input. External-action internals, OCR, upload, capture authenticity and complete effect replay are not attested."
+}
