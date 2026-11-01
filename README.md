@@ -1,12 +1,20 @@
 # ShareX Receipts
 
-**Keep the original. Commit the processing evidence. Verify the result.**
+ShareX may apply effects, annotations or compression before saving a capture. This modified version can keep a PNG copy of the image entering that processing, the finished file, and a small record linking the two.
 
-An actual source-fork integration for ShareX 21.0.0: an opt-in After capture task saves the accepted input bitmap as a lossless PNG, the exact final file, and a bounded processing record. An in-app inspector verifies the bundle and shows the preserved original. A portable Windows CLI provides independent byte and decoded-pixel checks.
+You prepare an annotated screenshot for a report, then want to inspect the earlier image or check whether a saved result changed later. Keeping just the final JPEG makes that harder. An extra starting copy and processing record give you something concrete to compare.
 
-[Interactive showcase and local browser verifier](https://az9713.github.io/rea-sharex-receipts/) · [Releases](https://github.com/az9713/rea-sharex-receipts/releases) · [Upstream source](https://github.com/ShareX/ShareX/tree/d2502561f63fc3ff502cacd91514e3f7f2948c74)
+**Example:** The test uses an invented image and saves a lower-quality JPEG. The receipt keeps the accepted input pixels separately, so the compressed result does not replace that starting copy. The inspector can then check the stored files against their recorded fingerprints.
+
+**What you install:** A modified ShareX application with an extra save-and-check option.
+
+**Current scope:** Here 'starting image' means the image handed into after-capture processing. Edits already made in the region editor are already included. A receipt cannot prove where an image came from or whether its content is true. Normal capture, hotkeys and profile migration still need hands-on validation.
+
+[Live guide](https://az9713.github.io/rea-sharex-receipts/) · [Download packages](https://github.com/az9713/rea-sharex-receipts/releases/tag/v0.1.1)
 
 ![Modified ShareX receipt inspector with a synthetic capture](docs/assets/inspector.png)
+
+
 
 ## What changed in the app
 
