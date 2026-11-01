@@ -11,6 +11,16 @@ index fdb41f5..458bf06 100644
      <PackageVersion Include="ZXing.Net" Version="0.16.11" />
      <PackageVersion Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.14" />
      <PackageVersion Include="Avalonia" Version="12.0.5" />
+diff --git a/Directory.build.props b/Directory.build.props
+index 52dbad1..f3949cf 100644
+--- a/Directory.build.props
++++ b/Directory.build.props
+@@ -1,4 +1,5 @@
+ <Project>
++  <Import Project="..\Directory.Build.props" />
+   <PropertyGroup>
+     <Company>ShareX Team</Company>
+     <Product>ShareX</Product>
 diff --git a/ShareX/Enums.cs b/ShareX/Enums.cs
 index af5e55a..4cbf161 100644
 --- a/ShareX/Enums.cs

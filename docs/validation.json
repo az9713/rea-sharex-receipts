@@ -1,12 +1,97 @@
 {
- "status": "passed with explicit scope limits",
- "source": {"repository":"https://github.com/ShareX/ShareX", "tag":"v21.0.0", "commit":"d2502561f63fc3ff502cacd91514e3f7f2948c74", "installed_binary_equivalence":"not established"},
- "build": {"sdk":"9.0.320 portable Windows x64, official metadata SHA512 checked", "full_modified_sharex":"passed", "receipt_cli":"passed", "latest_incremental_build_errors":0, "latest_incremental_build_warnings":0, "clean_dependency_rebuild_warnings":"3 upstream CS1998 async-without-await warnings; no NU1903 after SSH.NET2026.0.0 update", "self_contained_publish":"full app and CLI passed"},
- "receipt_tests": {"passed":15,"failed":0,"details":"test-results.json"},
- "modified_app_execution": {"status":"passed", "path":"actual WorkerTask.DoThreadJob", "input":"generated synthetic bitmap", "option":"SaveResearchReceipt only", "output":"normal ShareX JPEG encoder at quality40", "assertions":["original canonical pixels preserved","lossy result pixels differ","receipt byte and decoded pixel checks valid","sidecar published","actual inspector rendered"], "normal_user_profile_loaded":false, "real_desktop_capture":false},
- "published_executables": {"ShareX.exe":"synthetic WorkerTask self-test passed with portable runtime", "receipt.exe":"sample verification and synthetic demo passed", "global_dotnet_required":false},
- "browser": {"passed":true,"checks":["five-file byte verification","independent digest matched","altered recipe rejected","desktop1440 rendered","mobile390 no document overflow","no page errors"]},
- "visual_review": {"native_inspector":"programmatic Form.DrawToBitmap render, visually inspected; synthetic path label","docs":"headless Chromium full-page screenshot visually inspected; responsive automated checks"},
- "security_scope": "Integrity prototype, not an authenticity system, hostile-image sandbox or comprehensive security audit. SHA256 companion can be rewritten; independent digest required to detect full rewrite. Linked ancestors and concurrent file replacement not protected.",
- "not_exercised":["installed ShareX mutation or execution","real desktop/hotkey capture","normal profile migration","network uploads/SCP/SFTP compatibility","all upstream tools","signature/trusted timestamp","complete effect replay"]
+  "status": "passed with explicit scope limits",
+  "source": {
+    "repository": "https://github.com/ShareX/ShareX",
+    "tag": "v21.0.0",
+    "commit": "d2502561f63fc3ff502cacd91514e3f7f2948c74",
+    "installed_binary_equivalence": "not established"
+  },
+  "build": {
+    "sdk": "9.0.320 portable Windows x64, official metadata SHA512 checked",
+    "full_modified_sharex": "passed",
+    "receipt_cli": "passed",
+    "clean_dependency_rebuild_warnings": "3 upstream CS1998 async-without-await warnings; no NU1903 after SSH.NET2026.0.0 update",
+    "self_contained_publish": "full app and CLI passed",
+    "release_rebuild_errors": 0,
+    "release_rebuild_warnings": "3 upstream CS1998 async-without-await warnings in Avalonia image-editor source"
+  },
+  "receipt_tests": {
+    "passed": 15,
+    "failed": 0,
+    "details": "test-results.json"
+  },
+  "modified_app_execution": {
+    "status": "passed",
+    "path": "actual WorkerTask.DoThreadJob",
+    "input": "generated synthetic bitmap",
+    "option": "SaveResearchReceipt only",
+    "output": "normal ShareX JPEG encoder at quality40",
+    "assertions": [
+      "original canonical pixels preserved",
+      "lossy result pixels differ",
+      "receipt byte and decoded pixel checks valid",
+      "sidecar published",
+      "actual inspector rendered"
+    ],
+    "normal_user_profile_loaded": false,
+    "real_desktop_capture": false
+  },
+  "published_executables": {
+    "ShareX.exe": "synthetic WorkerTask self-test passed with portable runtime",
+    "receipt.exe": "sample verification and synthetic demo passed",
+    "global_dotnet_required": false
+  },
+  "browser": {
+    "passed": true,
+    "checks": [
+      "five-file byte verification",
+      "independent digest matched",
+      "altered recipe rejected",
+      "desktop1440 rendered",
+      "mobile390 no document overflow",
+      "no page errors"
+    ]
+  },
+  "visual_review": {
+    "native_inspector": "programmatic Form.DrawToBitmap render, visually inspected; synthetic path label",
+    "docs": "headless Chromium full-page screenshot visually inspected; responsive automated checks"
+  },
+  "security_scope": "Integrity prototype, not an authenticity system, hostile-image sandbox or comprehensive security audit. SHA256 companion can be rewritten; independent digest required to detect full rewrite. Linked ancestors and concurrent file replacement not protected.",
+  "not_exercised": [
+    "installed ShareX mutation or execution",
+    "real desktop/hotkey capture",
+    "normal profile migration",
+    "network uploads/SCP/SFTP compatibility",
+    "all upstream tools",
+    "signature/trusted timestamp",
+    "complete effect replay"
+  ],
+  "release": "v0.1.1",
+  "build_path_privacy": {
+    "path_map": "Project root mapped to virtual /_/",
+    "avalonia_rewriter": "Debug metadata disabled for ShareX.ImageEditor only; its PE writer otherwise emits a physical PDB path despite compiler PathMap",
+    "full_app_pe_files_scanned": 736,
+    "cli_pe_files_scanned": 267,
+    "encodings": [
+      "ASCII/UTF8",
+      "UTF16LE"
+    ],
+    "literal_project_profile_path_matches": 0,
+    "debug_symbol_files": "Excluded from binary ZIP",
+    "limits": "No comprehensive embedded/compressed-data privacy claim"
+  },
+  "portable_profile": {
+    "marker": "Portable beside ShareX.exe",
+    "source_verified": "Program.UpdatePersonalPath prioritizes marker before registry/config migration; FileHelpers.GetAbsolutePath anchors to AppDomain.CurrentDomain.BaseDirectory",
+    "default_data_folder": "ShareX subdirectory beside extracted executable",
+    "normal_startup_executed": false,
+    "isolated_diagnostics": "Run before normal settings/startup handling"
+  },
+  "rebuilt_execution": {
+    "receipt_tests": 15,
+    "worker_task_synthetic_jpeg40": "passed",
+    "native_inspector": "rendered",
+    "cli_demo_and_independent_anchor": "passed",
+    "normal_installed_profile_loaded": false
+  }
 }

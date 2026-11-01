@@ -19,7 +19,7 @@ The installed ShareX application was not patched or launched. This project build
 
 ## Try the portable release
 
-Requires Windows x64; the full fork targets Windows 11 build 22621 or later. Download and extract `ShareX-Receipts-win-x64.zip`. Keep its directory intact. It contains its .NET runtime and an upstream Portable marker. For a synthetic demonstration that bypasses the normal ShareX profile/startup path:
+Requires Windows x64; the full fork targets Windows 11 build 22621 or later. Download and extract `ShareX-Receipts-v0.1.1-win-x64.zip`. Keep its directory intact. It contains its .NET runtime and an upstream Portable marker. For a synthetic demonstration that bypasses the normal ShareX profile/startup path:
 
 ```powershell
 .\ShareX.exe --receipt-self-test .\synthetic-demo
@@ -36,7 +36,7 @@ Open an existing receipt directly:
 
 For normal app use, run the portable ShareX.exe, set the capture output to a dedicated test folder, enable the new After capture task, and capture a synthetic test document. Normal ShareX behavior, hotkeys and network settings remain upstream behavior; the isolated test does not validate every normal app feature. Normal capture was not exercised against this laptop's real desktop.
 
-The separate `Receipt-CLI-win-x64.zip` also needs no global .NET install:
+The separate `Receipt-CLI-v0.1.1-win-x64.zip` also needs no global .NET install:
 
 ```powershell
 .\receipt.exe demo .\demo-receipts
@@ -89,3 +89,7 @@ REA's read-only managed analysis identified ShareX 21.0.0.0 targeting .NET9, mot
 ## License
 
 GPL-3.0-or-later for new code; see [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). Upstream headers and third-party notices are retained. Every modified binary release must include the matching full corresponding-source archive. This is an experimental independent fork, not an official ShareX release.
+
+## Release 0.1.1: compiler path privacy
+
+This rebuild maps local source paths to virtual `/_/` paths before compilation, disables debug metadata for the Avalonia-rewritten image-editor assembly, and checks every packaged PE file for literal project/profile path markers in ASCII/UTF8 and UTF16LE. Debug-symbol files are excluded too. The 0.1.0 binary packages are superseded because compiler metadata retained local build paths. The source and feature behavior are otherwise unchanged. This bounded scan does not establish the absence of every possible embedded or compressed private value.

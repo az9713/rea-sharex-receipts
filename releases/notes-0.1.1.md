@@ -1,0 +1,1 @@
+Version0.1.1 rebuild removes local build paths from owned native PE compiler metadata using path mapping. Actual extracted executables and all prior scoped verification were rerun; literal ASCII/UTF16 known build-path scanning passes. Corresponding source and notices are included. No broader runtime integration claim is added. Prior experimental scope and limitations still apply.

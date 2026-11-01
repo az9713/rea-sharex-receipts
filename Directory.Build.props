@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildThisFileDirectory)=/_/</PathMap>
+    <Version>0.1.1</Version>
+  </PropertyGroup>
+  <!-- Avalonia rewrites this PE and otherwise adds a physical PDB path to CodeView. -->
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'ShareX.ImageEditor'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+</Project>
