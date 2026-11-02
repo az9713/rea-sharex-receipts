@@ -12,6 +12,18 @@ You prepare an annotated screenshot for a report, then want to inspect the earli
 
 [Live guide](https://az9713.github.io/rea-sharex-receipts/) · [Download packages](https://github.com/az9713/rea-sharex-receipts/releases/tag/v0.1.1)
 
+<!-- rea-release-expectations:start -->
+## What to expect from this release
+
+**Status: experimental.** Read the tested scope and remaining work below before choosing this release for your workflow.
+
+- **What you get:** A separate modified ShareX application built from public source, plus a receipt command-line tool. The receipt option and inspector are implemented inside that modified application.
+- **Verified so far:** The actual modified capture-processing pipeline was run with a generated image. Receipt creation, original-pixel preservation, changed-output checks, the native inspector and extracted release executables were exercised.
+- **Still needs testing or implementation:** Normal desktop capture, hotkeys, settings/profile migration, network actions and broader Windows compatibility still need hands-on validation.
+- **Relationship to the original app:** The modified executable is supplied separately; building it did not patch the installed ShareX copy. The receipt preserves the image entering after-capture processing, including any earlier region-editor changes. It does not prove the image's origin or truth.
+
+<!-- rea-release-expectations:end -->
+
 ![Modified ShareX receipt inspector with a synthetic capture](docs/assets/inspector.png)
 
 
